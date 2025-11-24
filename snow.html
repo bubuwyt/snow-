@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>冬日飘雪</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(to bottom, #e6f7ff, #b3e0ff);
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            position: relative;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 85%;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #0066cc;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            border-radius: 50%;
+            background-color: white;
+            opacity: 0.8;
+            filter: blur(0.5px);
+            box-shadow: 0 0 5px white;
+            pointer-events: none;
+        }
+        
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            color: #0066cc;
+            font-size: 0.8rem;
+            text-align: center;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        .methods {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+        
+        .methods h3 {
+            margin-bottom: 10px;
+            color: #0066cc;
+            text-align: center;
+        }
+        
+        .methods ul {
+            padding-left: 20px;
+        }
+        
+        .methods li {
+            margin-bottom: 8px;
+        }
+        
+        .btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background-color: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #0052a3;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            70% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(100vh) translateX(20px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>冬日飘雪</h1>
+        <p>淡蓝色的天空中，洁白的雪花轻轻飘落</p >
+        <p>感受这宁静而美好的冬日时光</p >
+        
+        <div class="methods">
+            <h3>使用GitHub Pages部署成功！</h3>
+            <p>您现在可以在微信中分享此链接：</p >
+            <p style="word-break: break-all; font-size: 0.75rem; background: #f0f8ff; padding: 8px; border-radius: 5px;">
+                https://<span id="username-placeholder">您的用户名</span>.github.io/snow-effect/snow.html
+            </p >
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>雪花效果 - 微信内可正常显示</p >
+    </div>
+
+    <script>
+        // 创建雪花
+        function createSnowflakes() {
+            const snowflakeCount = 80;
+            const body = document.querySelector('body');
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                
+                // 随机大小
+                const size = Math.random() * 4 + 1;
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                
+                // 随机起始位置
+                snowflake.style.left = `${Math.random() * 100}vw`;
+                
+                // 随机下落速度和延迟
+                const duration = Math.random() * 8 + 3;
+                const delay = Math.random() * 5;
+                
+                snowflake.style.animation = `fall ${duration}s linear ${delay}s infinite`;
+                
+                body.appendChild(snowflake);
+            }
+        }
+        
+        // 初始化雪花
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', createSnowflakes);
+        } else {
+            createSnowflakes();
+        }
+        
+        // 防止页面滚动
+        document.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+    </script>
+</body>
+</html>
